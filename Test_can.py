@@ -5,3 +5,5 @@ msg = can.Message(arbitration_id=0x7de, data=[6, 17], extended_id=False)
 bus.send(msg)
 
 #notifier = can.Notifier(bus, [can.Printer()])
+
+#GIT test
