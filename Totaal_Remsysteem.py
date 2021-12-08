@@ -1,4 +1,4 @@
-# Startup 
+# Startup (libraries)
 import keyboard                 # Importeert keyboard library
 import time
 import board
