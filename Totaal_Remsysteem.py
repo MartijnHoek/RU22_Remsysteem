@@ -55,7 +55,6 @@ class Keyboard:
             self.display = not self.display  # De waarde van Display wordt omgedraaid True -> False en andersom  dit is belangrijk voor de onderstaande IF loop
             self.block = True                # Waarde van Block wordt True zodat loop niet opnieuw opend
 
-
 Signalen_Remdruksensor = Remdruksensor(chan1, chan2)
    
 eigen_keyboard = Keyboard(0)
