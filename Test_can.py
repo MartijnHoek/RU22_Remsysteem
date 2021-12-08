@@ -6,4 +6,3 @@ bus.send(msg)
 
 #notifier = can.Notifier(bus, [can.Printer()])
 
-#GIT test
