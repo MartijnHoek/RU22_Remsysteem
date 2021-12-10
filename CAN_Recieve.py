@@ -1,3 +1,5 @@
+#sudo /sbin/ip link set can0 up type can bitrate 500000
+
 import can
 import time
 
@@ -9,5 +11,5 @@ bus = can.interface.Bus(channel='can0', bustype='socketcan_native')
 
 while True:
     notifier = can.Notifier(bus, [can.Printer()])
-    time.sleep(1000)
+    time.sleep(1)
     
