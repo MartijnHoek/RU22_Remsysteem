@@ -12,3 +12,4 @@ bus = can.interface.Bus(channel='can0', bustype='socketcan_native')
 while True:
     message = bus.recv()
     print(message)
+#test
