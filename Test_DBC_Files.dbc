@@ -98,8 +98,8 @@ BO_ 511 Internal_BrakeSystem: 8 Remsysteem
  SG_ Overtravel_Switch_Activation : 33|1@1+ (1,0) [0|1] ""  CentraleRegeleenheid,RES
 
 BO_ 512 Test_berichten: 2 Vector__XXX
- SG_ Pot1 : 0|8@1+ (1,0.0129411765) [0|255] "Volt" Vector__XXX
- SG_ Pot2 : 8|8@1+ (1,0.0129412) [0|255] "Volt" Vector__XXX
+ SG_ Pot1 : 0|8@1+ (1,0) [0|255] "Volt" Vector__XXX
+ SG_ Pot2 : 8|8@1+ (1,0) [0|255] "Volt" Vector__XXX
 
 
 

@@ -1,15 +1,16 @@
 #sudo /sbin/ip link set can0 up type can bitrate 500000
 
 import can
+import cantools
+from can.message import Message
 import time
 
-bus = can.interface.Bus(channel='can0', bustype='socketcan_native')
-#msg = can.Message(arbitration_id=0x502, data=[6, 17], extended_id=False)
-#bus.send(msg)
+db = cantools.db.load_file('/home/pi/RU22_Remsysteem/Test_DBC_Files.dbc')
 
-#notifier = can.Notifier(bus, [can.Printer()])
+bus = can.interface.Bus(channel='can0', bustype='socketcan_native')
 
 while True:
     message = bus.recv()
-    print(message)
+    print(db.decode_message(message.arbitration_id, message.data))
+    #print(message)
 #test
