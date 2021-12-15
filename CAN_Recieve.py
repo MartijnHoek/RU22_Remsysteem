@@ -12,5 +12,3 @@ bus = can.interface.Bus(channel='can0', bustype='socketcan_native')
 while True:
     message = bus.recv()
     print(db.decode_message(message.arbitration_id, message.data))
-    #print(message)
-#test
