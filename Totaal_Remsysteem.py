@@ -62,11 +62,10 @@ Signalen_Remdruksensor = Remdruksensor(chan1, chan2)
    
 eigen_keyboard = Keyboard(0)
    
-while True:
-                                                      # De klasse keyboard wordt geopend, hierin wordt de Press functie toegepast, wanneer de k toets ingedrukt
-                                                      # wordt zal de code in deze klasse geactiveerd worden (en zal de motor in/uitgeschakeld worden)
-    if eigen_keyboard.Press() :                       # Als Display True is opend deze loop
-        eigen_keyboard.motor_uit()      
+while True:                                                   
+                                                      # De klasse keyboard wordt geopend, hierin wordt de Press functie toegepast, wanneer de k toets ingedrukt    
+    if eigen_keyboard.Press() :                       # wordt zal de code in deze klasse geactiveerd worden (en zal de motor in/uitgeschakeld worden) 
+        eigen_keyboard.motor_uit()                    # Als Display True is opend deze loop
     else:                                             # Als Display False is opend deze loop
         eigen_keyboard.motor_aan()
 
