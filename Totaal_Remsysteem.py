@@ -56,15 +56,16 @@ class Keyboard:                                      # Klasse voor het toetsenbo
                 self.block = True                # Waarde van Block wordt True zodat loop niet opnieuw opend
         else: 
             self.block = False                   # Block wordt terug op False gezet
+        return self.display
             
 Signalen_Remdruksensor = Remdruksensor(chan1, chan2)
    
 eigen_keyboard = Keyboard(0)
    
 while True:
-    eigen_keyboard.Press()                            # De klasse keyboard wordt geopend, hierin wordt de Press functie toegepast, wanneer de k toets ingedrukt
+    #if                           # De klasse keyboard wordt geopend, hierin wordt de Press functie toegepast, wanneer de k toets ingedrukt
                                                       # wordt zal de code in deze klasse geactiveerd worden (en zal de motor in/uitgeschakeld worden)
-    if eigen_keyboard.display:                        # Als Display True is opend deze loop
+    if eigen_keyboard.Press() :                        # Als Display True is opend deze loop
         eigen_keyboard.motor_uit()      
     else:                                             # Als Display False is opend deze loop
         eigen_keyboard.motor_aan()

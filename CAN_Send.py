@@ -46,4 +46,8 @@ while True:
 
     msg_data = msg.encode({'Pot1':Sensor1Stand, 'Pot2':Sensor2Stand})
     bericht=can.Message(arbitration_id=msg.frame_id, data=msg_data)
-    bus.send(bericht) 
+    bus.send(bericht)
+    
+    message = bus.recv()
+    print(db.decode_message(message.arbitration_id, message.data))
+    
