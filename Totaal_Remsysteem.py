@@ -49,7 +49,7 @@ class Keyboard:                                      # Klasse voor het toetsenbo
         dir1.value = True
         dir2.value = False
         
-    def Press(self):
+    def Toggle_k(self):
         if keyboard.is_pressed("k"):             # Wanneer toets k ingedrukt open loop      
             if self.block == False:              # Wanneer waarde block gelijk is aan False open loop
                 self.display = not self.display  # De waarde van Display wordt omgedraaid True -> False en andersom  dit is belangrijk voor de onderstaande IF loop
@@ -64,7 +64,7 @@ eigen_keyboard = Keyboard(0)
    
 while True:                                                   
                                                       # De klasse keyboard wordt geopend, hierin wordt de Press functie toegepast, wanneer de k toets ingedrukt    
-    if eigen_keyboard.Press() :                       # wordt zal de code in deze klasse geactiveerd worden (en zal de motor in/uitgeschakeld worden) 
+    if eigen_keyboard.Toggle_k() :                    # wordt zal de code in deze klasse geactiveerd worden (en zal de motor in/uitgeschakeld worden) 
         eigen_keyboard.motor_uit()                    # Als Display True is opend deze loop
     else:                                             # Als Display False is opend deze loop
         eigen_keyboard.motor_aan()
