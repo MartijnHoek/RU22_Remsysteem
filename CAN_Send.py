@@ -49,15 +49,7 @@ while True:
         if(Test_berichten_Pot1 == 232):
             print('werkt')
         if(Test_berichten_Pot2 <= 200):
-            print('owjo')
+            print('owjo')    
     
-    if message.arbitration_id == 513:
-        
-        
-    
-    
-  
-    
-
-
-    
+    else:
+        print("Joeri's bericht")
