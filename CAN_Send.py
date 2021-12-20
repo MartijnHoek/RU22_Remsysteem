@@ -26,7 +26,7 @@ class Remdruksensor:                                 # Klasse voor de remdruksen
 Signalen_Remdruksensor = Remdruksensor(AnalogIn(ads, ADS.P0),AnalogIn(ads,ADS.P1))       
   
 bus = can.interface.Bus(channel='can0', bustype='socketcan_native')
-db = cantools.db.load_file('/home/pi/RU22_Remsysteem/Test_DBC_Files.dbc')
+db = cantools.db.load_file('/home/pi/Desktop/RU22_Remsysteem/FSG_Data_Logger_data_V1.1.dbc')
 Test_berichten = db.get_message_by_name('Test_berichten')
  
 while True:
@@ -39,15 +39,24 @@ while True:
     bus.send(Test_berichten_bericht)
     
     message = bus.recv()
-    message=db.decode_message(message.arbitration_id, message.data) 
-    Test_berichten_Pot1=message.get('Pot1')
-    Test_berichten_Pot2=message.get('Pot2')
     
-    if(Test_berichten_Pot1 == 232):
-        print('werkt')
-    if(Test_berichten_Pot2 <= 200):
-        print('owjo')
+    if message.arbitration_id == 512:
     
+        message=db.decode_message(message.arbitration_id, message.data) 
+        Test_berichten_Pot1=message.get('Pot1')
+        Test_berichten_Pot2=message.get('Pot2')
+        
+        if(Test_berichten_Pot1 == 232):
+            print('werkt')
+        if(Test_berichten_Pot2 <= 200):
+            print('owjo')
+    
+    if message.arbitration_id == 513:
+        
+        
+    
+    
+  
     
 
 
