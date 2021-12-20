@@ -1,9 +1,9 @@
 #sudo /sbin/ip link set can0 up type can bitrate 500000 # Instellingen voor setup CAN-bus
 
 # Startup (libraries)
-import cantools
-import can
-from can.message import Message
+import can                                           # Importeert can library       (CAN)
+import cantools                                      # Importeert can library       (CAN)
+from can.message import Message                      # Importeert can library       (CAN)
 
 import time                                          # Importeert time library      (RPi)
 import board                                         # Importeert board library     (adafruit)
@@ -15,7 +15,7 @@ from adafruit_ads1x15.analog_in import AnalogIn      # Importeer AnalogIn librar
 i2c = busio.I2C(board.SCL, board.SDA)                # busio.I2C creeert een interface voor de I2C protocol
 ads = ADS.ADS1015(i2c)                               # De ADS drive wordt aangegeven welke interface toegepast moet worden
 
-def arduino_map(x, in_min, in_max, out_min, out_max):
+def arduino_map(x, in_min, in_max, out_min, out_max):#Maakt de Arduino map() functie na voor het verwerken van analoge signalen
     return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min
 
 class Remdruksensor:                                 # Klasse voor de remdruksensor wordt aangemaakt
@@ -25,31 +25,38 @@ class Remdruksensor:                                 # Klasse voor de remdruksen
 
 Signalen_Remdruksensor = Remdruksensor(AnalogIn(ads, ADS.P0),AnalogIn(ads,ADS.P1))       
   
-bus = can.interface.Bus(channel='can0', bustype='socketcan_native')
-db = cantools.db.load_file('/home/pi/Desktop/RU22_Remsysteem/FSG_Data_Logger_data_V1.1.dbc')
-Test_berichten = db.get_message_by_name('Test_berichten')
- 
-while True:
-   
-    Sensor1Stand = arduino_map(Signalen_Remdruksensor.chan1.voltage, 0, 3.3, 0, 255)
-    Sensor2Stand = arduino_map(Signalen_Remdruksensor.chan2.voltage, 0, 3.3, 0, 255)
+bus = can.interface.Bus(channel='can0', bustype='socketcan_native')                           # Maakt de CAN bus aan (type bus en kanaal wordt gedefineerd)
+db = cantools.db.load_file('/home/pi/Desktop/RU22_Remsysteem/FSG_Data_Logger_data_V1.1.dbc')  # Laad het .dbc file voor ontcijferen berichten
+Test_berichten = db.get_message_by_name('Test_berichten')                                     # Ontcijfert de Test_berichten uit het .dbc file
 
-    Test_berichten_data = Test_berichten.encode({'Pot1':Sensor1Stand, 'Pot2':Sensor2Stand})
-    Test_berichten_bericht=can.Message(arbitration_id=Test_berichten.frame_id, data=Test_berichten_data)
-    bus.send(Test_berichten_bericht)
-    
-    message = bus.recv()
-    
-    if message.arbitration_id == 512:
-    
-        message=db.decode_message(message.arbitration_id, message.data) 
-        Test_berichten_Pot1=message.get('Pot1')
-        Test_berichten_Pot2=message.get('Pot2')
+class CAN:
+    def __init__ (self, Remdruk):
+        self.Remdruk = Remdruk   
+
+    def Remdruksensoren(self):
+        Sensor1Stand = arduino_map(Signalen_Remdruksensor.chan1.voltage, 0, 3.3, 0, 255)
+        Sensor2Stand = arduino_map(Signalen_Remdruksensor.chan2.voltage, 0, 3.3, 0, 255)
+        Test_berichten_data = Test_berichten.encode({'Pot1':Sensor1Stand, 'Pot2':Sensor2Stand})
+        Test_berichten_bericht=can.Message(arbitration_id=Test_berichten.frame_id, data=Test_berichten_data)
+        bus.send(Test_berichten_bericht)
+
+    def Ontvangen(self):
+        message = bus.recv()
+        if message.arbitration_id == 512:    
+            message=db.decode_message(message.arbitration_id, message.data) 
+            Test_berichten_Pot1=message.get('Pot1')
+            Test_berichten_Pot2=message.get('Pot2')
         
-        if(Test_berichten_Pot1 == 232):
-            print('werkt')
-        if(Test_berichten_Pot2 <= 200):
-            print('owjo')    
+            if(Test_berichten_Pot1 == 232):
+                print('werkt')
+            if(Test_berichten_Pot2 <= 200):
+                print('owjo')        
+        else:
+            print("Joeri's berichten")
+            
+CAN_bus = CAN(0)
+
+while True:
     
-    else:
-        print("Joeri's bericht")
+    CAN_bus.Remdruksensoren()
+    CAN_bus.Ontvangen()
