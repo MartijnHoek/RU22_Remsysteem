@@ -24,23 +24,24 @@ class CAN:                                       # Maakt de CAN klasse aan
 
     def Ontvangen(self):                                                     # Het ontvangen en verwerken van data over de CAN bus
         message = bus.recv()                                                 # Berichten van de bus worden verbonden aan parameter message
-        if message.arbitration_id == 512 or 514:
-            message = db.decode_message(message.arbitration_id, message.data)
-            Test_berichten_Pot1=message.get('Pot1')                          # De data worden uitgelezen op basis van de verbonden waardes in het .dbc file
-            Test_berichten_Pot2=message.get('Pot2')                          # Idem    
-            Actual_snelheid = message.get('Actual_snelheid')
-            Target_snelheid = message.get('Target_snelheid')
-            Systeem_Mode = message.get('Systeem_Mode')
-            Service_Mode = message.get('Service_Mode')
-            Stuurhoek = message.get('Stuurhoek')
-
-            if(Test_berichten_Pot1 == 232):        # Tijdens testfase gebruikt om te controleren hoe verkregen data verwerkt werdt                          
-                 print('werkt')
-            if(Test_berichten_Pot2 <= 200):
-                 print('owjo')
-                 
-            print(Actual_snelheid, Target_snelheid, Systeem_Mode, Service_Mode, Stuurhoek)
-               
+        if message.arbitration_id == 512:
+            message512 = db.decode_message(message.arbitration_id, message.data)
+            Test_berichten_Pot1=message512.get('Pot1')                          # De data worden uitgelezen op basis van de verbonden waardes in het .dbc file
+            Test_berichten_Pot2=message512.get('Pot2')                          # Idem
+            #print(Test_berichten_Pot1, Test_berichten_Pot2) 
+            print(message512)
+        
+        
+        elif message.arbitration_id == 514:
+            message514 = db.decode_message(message.arbitration_id, message.data)
+            Actual_snelheid = message514.get('Actual_snelheid')
+            Target_snelheid = message514.get('Target_snelheid')
+            Systeem_Mode = message514.get('Systeem_Mode')
+            Service_Mode = message514.get('Service_Mode')
+            Stuurhoek = message514.get('Stuurhoek')
+            #print(Actual_snelheid, Target_snelheid, Systeem_Mode, Service_Mode, Stuurhoek) 
+            print(message514)
+            
         else:
             print("Overige berichten")
             
