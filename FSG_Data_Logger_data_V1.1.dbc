@@ -83,8 +83,6 @@ BO_ 1072 FSE_EnergyMeter_Data: 8 Datalogger
 BO_ 500 DriverlessDrivingDynamics1: 8 CentraleRegeleenheid
  SG_ Speed_actual : 0|8@1+ (1,0) [0|255] "kph"  RES,Datalogger,Remsysteem,Stuursysteem,Powertrain,BMS,AutonoomRegelsysteem
  SG_ Speed_target : 8|8@1+ (1,0) [0|255] "kph"  RES,Datalogger,Remsysteem,Stuursysteem,Powertrain,BMS,AutonoomRegelsysteem
- SG_ Steering_angle_actual : 16|8@1- (0.5,0) [-128|127] "°"  RES,Datalogger,Remsysteem,Stuursysteem,Powertrain,AutonoomRegelsysteem
- SG_ Steering_angle_target : 24|8@1- (0.5,0) [-128|127] "°"  RES,Datalogger,Remsysteem,Stuursysteem,Powertrain,AutonoomRegelsysteem
  SG_ Brake_actual : 32|8@1+ (1,0) [0|100] "%"  RES,Datalogger,Remsysteem,Stuursysteem,Powertrain,AutonoomRegelsysteem
  SG_ Brake_target : 40|8@1+ (1,0) [0|100] "%"  RES,Datalogger,Remsysteem,Stuursysteem,Powertrain,AutonoomRegelsysteem
  SG_ Motor_moment_actual : 48|8@1- (1,0) [0|100] "%"  RES,Datalogger,Remsysteem,Stuursysteem,Powertrain,AutonoomRegelsysteem
@@ -106,6 +104,10 @@ BO_ 511 Internal_BrakeSystem: 8 Remsysteem
 BO_ 512 Test_berichten: 2 Vector__XXX
  SG_ Pot1 : 0|8@1+ (1,0) [0|255] "Volt" Vector__XXX
  SG_ Pot2 : 8|8@1+ (1,0) [0|255] "Volt" Vector__XXX
+
+BO_ 513 Stuur_systeem: 2 Stuursysteem
+ SG_ Steering_angle_actual : 0|8@1- (0.5,0) [-128|127] "°"  RES,Datalogger,Remsysteem,Stuursysteem,Powertrain,AutonoomRegelsysteem
+ SG_ Steering_angle_target : 8|8@1- (0.5,0) [-128|127] "°"  RES,Datalogger,Remsysteem,Stuursysteem,Powertrain,AutonoomRegelsysteem
 
 
 
