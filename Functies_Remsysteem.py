@@ -15,20 +15,19 @@ def arduino_map(x, in_min, in_max, out_min, out_max):#Maakt de Arduino map() fun
 
 # Keyboard functies
 
-class Keyboard:                                      # Klasse voor het toetsenbord wordt aangemaakt 
-    def __init__ (self, PWM):                        # De klasse wordt geinitialiseerd
-        self.PWM =  PWM                              # De PWM wordt aangeduid
-        self.block = True                            # De block parameter wordt op True gezet 
-        self.display = True                          # De display parameter wordt op True gezet 
+class Keyboard:                                  # Klasse voor het toetsenbord wordt aangemaakt 
+    def __init__ (self):                         # De klasse wordt geinitialiseerd                             
+        self.block = True                        # De block parameter wordt op True gezet 
+        self.display = True                      # De display parameter wordt op True gezet 
         
-    def motor_uit(self,PWM):                             # De motor_uit functie wordt aangemaakt, hierin wordt de DC op 0 gezet en wordt er motor uit geprint 
-        PWM.duty_cycle = 0                           # in de terminal  
+    def motor_uit(self,PWM):                     # De motor_uit functie wordt aangemaakt, hierin wordt de DC op 0 gezet en wordt er motor uit geprint 
+        PWM.duty_cycle = 0                       # in de terminal  
         #print("Motor Uit")       
-        dir1.value = True                            # De richting van de motor wordt vastgesteld als 1 = True en 2 False is de richting rechtsom 
+        dir1.value = True                        # De richting van de motor wordt vastgesteld als 1 = True en 2 False is de richting rechtsom 
         dir2.value = False       
         
-    def motor_aan(self,PWM):                             # De motor aan functie wordt aangemaakt, hierin wordt de DC op 65535 gezet (maximale waarde) en wordt er
-        PWM.duty_cycle = 65535                       # in de terminal aangegeven dat de motor geactiveerd is.
+    def motor_aan(self,PWM):                     # De motor aan functie wordt aangemaakt, hierin wordt de DC op 65535 gezet (maximale waarde) en wordt er
+        PWM.duty_cycle = 65535                   # in de terminal aangegeven dat de motor geactiveerd is.
         #print("Motor Aan")        
         dir1.value = True
         dir2.value = False
@@ -42,4 +41,4 @@ class Keyboard:                                      # Klasse voor het toetsenbo
             self.block = False                   # Block wordt terug op False gezet
         return self.display
 
-eigen_keyboard =Keyboard(0)
+eigen_keyboard =Keyboard()

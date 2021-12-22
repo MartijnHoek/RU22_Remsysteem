@@ -1,9 +1,9 @@
 # Startup (libraries)
-import pulseio
-import board
+import pulseio               # Importeert de library voor de motor aansturing (PWM signalen)
+import board                 # Importeert de library voor de motor aansturing (pin aanduiding)
 
-import Functies_Remsysteem 
-import CANbus_Remsysteem
+import Functies_Remsysteem   # Importeert de overige functies voor het remsysteem script
+import CANbus_Remsysteem     # Importeert de CAN bus library waarin de CAN berichten van het remsysteem verwerkt worden
 
 while True:                                                   
                                                                                   # De klasse keyboard wordt geopend, hierin wordt de Press functie toegepast, wanneer de k toets ingedrukt    
