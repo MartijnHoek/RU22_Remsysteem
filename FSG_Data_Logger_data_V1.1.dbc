@@ -72,6 +72,8 @@ BO_ 3221225472 VECTOR__INDEPENDENT_SIG_MSG: 0 Vector__XXX
  SG_ Service_brake_state_disengaged m1 : 9|2@1+ (1,0) [0|1] ""  Remsysteem,Datalogger,RES
  SG_ Service_brake_state_engaged m2 : 9|2@1+ (1,0) [0|1] ""  Remsysteem,Datalogger,RES
  SG_ Service_brake_state_available m3 : 9|2@1+ (1,0) [0|1] ""  Remsysteem,Datalogger,RES
+ SG_ NewSignal_0004 : 16|8@1+ (1,0) [0|0] "" Vector__XXX
+ SG_ NewSignal_0005 : 24|8@1+ (1,0) [0|0] "" Vector__XXX
 
 BO_ 1072 FSE_EnergyMeter_Data: 8 Datalogger
  SG_ Current : 48|16@1- (0.05,0) [-1638.4|1638.35] "A"  Datalogger
@@ -109,6 +111,13 @@ BO_ 513 Stuur_systeem: 2 Stuursysteem
  SG_ Steering_angle_actual : 0|8@1- (0.5,0) [-128|127] "°"  RES,Datalogger,Remsysteem,Stuursysteem,Powertrain,AutonoomRegelsysteem
  SG_ Steering_angle_target : 8|8@1- (0.5,0) [-128|127] "°"  RES,Datalogger,Remsysteem,Stuursysteem,Powertrain,AutonoomRegelsysteem
 
+BO_ 514 Aansturing_Remsysteem: 8 CentraleRegeleenheid
+ SG_ Actual_snelheid : 0|8@1+ (1,0) [0|255] "kph" Vector__XXX
+ SG_ Target_snelheid : 8|8@1+ (1,0) [0|255] "kph" Vector__XXX
+ SG_ Systeem_Mode : 16|4@1+ (1,0) [0|5] "" Vector__XXX
+ SG_ Service_Mode : 20|4@1+ (1,0) [0|3] "" Vector__XXX
+ SG_ Stuurhoek : 24|8@1+ (0.5,0) [-128|127] "°" Vector__XXX
+
 
 
 CM_ BU_ RES "Remote Emergency System
@@ -140,6 +149,8 @@ CM_ SG_ 511 Brake_Balance "Het remverschil tussen de voorste en achterste as
 ";
 CM_ SG_ 511 Brakesystem_status "Status van het remsysteem (ON/OFF/ERROR/SERVICE)";
 CM_ SG_ 511 Overtravel_Switch_Activation "Status van de Overtravel Switch (ON/OFF)";
+CM_ BO_ 514 "Berichten vanuit de centrale regeleenheid voor het remsysteem
+";
 BA_DEF_ SG_  "GenSigStartValue" FLOAT 0 1215752192;
 BA_DEF_ SG_  "GenSigSendType" ENUM  "Cyclic","OnWrite","OnWriteWithRepetition","OnChange","OnChangeWithRepetition","IfActive","IfActiveWithRepetition","NoSigSendType","NotUsed","NotUsed","NotUsed","NotUsed","NotUsed";
 BA_DEF_ SG_  "GenSigInactiveValue" INT 0 100000;
@@ -177,6 +188,8 @@ BA_DEF_DEF_  "BusType" "CAN";
 BA_ "GenMsgSendType" BO_ 1072 0;
 BA_ "GenMsgCycleTime" BO_ 1072 20;
 BA_ "GenMsgCycleTime" BO_ 511 100;
+BA_ "GenMsgSendType" BO_ 514 0;
+BA_ "GenMsgCycleTime" BO_ 514 100;
 BA_ "NmStationAddress" BU_ Datalogger 0;
 VAL_ 1072 Status 8 "Error" 7 "Logging EM & FSD data" 5 "Logging FSD data" 3 "Logging EM data" 1 "DL idle, ready to log" ;
 
