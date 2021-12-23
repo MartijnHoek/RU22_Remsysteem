@@ -1,9 +1,11 @@
-#sudo /sbin/ip link set can0 up type can bitrate 500000 # Instellingen voor setup CAN-bus
-
 # Startup (libraries)
 import cantools                     # Importeert can library      (CAN)
 import can                          # Importeert can library      (CAN)
 from can.message import Message     # Importeert can library      (CAN)
+
+import os
+
+os.system("sudo /sbin/ip link set can0 up type can bitrate 500000 # Instellingen voor setup CAN-bus")
 
 bus = can.interface.Bus(channel='can0', bustype='socketcan_native')                           # Maakt de CAN bus aan (type bus en kanaal wordt gedefineerd)
 db = cantools.db.load_file('/home/pi/Desktop/RU22_Remsysteem/FSG_Data_Logger_data_V1.1.dbc')  # Laad het .dbc file voor ontcijferen berichten
@@ -14,15 +16,6 @@ def arduino_map(x, in_min, in_max, out_min, out_max): # De meet klasse wordt aan
     return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min
 
 while True:
-    
-    # Test berichten bericht
-    
-    Sensor1Stand = arduino_map(3, 0, 3.3, 0, 255)     # Een sensor waarde met voltage naar decimale omzet wordt aangemaakt
-    Sensor2Stand = arduino_map(3, 0, 3.3, 0, 255)     # Een sensor waarde met voltage naar decimale omzet wordt aangemaakt
-
-    Test_berichten_data = Test_berichten.encode({'Pot1':Sensor1Stand, 'Pot2':Sensor2Stand})   # Er wordt aangegeven welke data bij welke aangegeven .dbc waarde hoort   
-    Test_berichten_bericht=can.Message(arbitration_id = Test_berichten.frame_id, data = Test_berichten_data)    # Het CAN bericht wordt opgesteld
-    bus.send(Test_berichten_bericht)                                                                            # Het bericht wordt over de bus verzonden
     
     # Aansturing Remsysteem bericht
     
@@ -35,8 +28,17 @@ while True:
     # Zelfde proces als Test_berichten (er wordt een bericht aangemaakt en verzonden)
     Aansturing_Remsysteem_data = Aansturing_Remsysteem.encode({'Actual_snelheid':Actual_snelheid, 'Target_snelheid': Target_snelheid, 'Systeem_Mode': Systeem_Mode, 'Service_Mode': Service_Mode, 'Stuurhoek':Stuurhoek})
     Aansturing_Remsysteem_bericht = can.Message(arbitration_id = Aansturing_Remsysteem.frame_id, data = Aansturing_Remsysteem_data)
-    bus.send(Aansturing_Remsysteem_bericht)
-      
+    bus.send(Aansturing_Remsysteem_bericht)    
+    
+    # Test berichten bericht
+    
+    Sensor1Stand = arduino_map(3, 0, 3.3, 0, 255)     # Een sensor waarde met voltage naar decimale omzet wordt aangemaakt
+    Sensor2Stand = arduino_map(3, 0, 3.3, 0, 255)     # Een sensor waarde met voltage naar decimale omzet wordt aangemaakt
+
+    Test_berichten_data = Test_berichten.encode({'Pot1':Sensor1Stand, 'Pot2':Sensor2Stand})   # Er wordt aangegeven welke data bij welke aangegeven .dbc waarde hoort   
+    Test_berichten_bericht=can.Message(arbitration_id = Test_berichten.frame_id, data = Test_berichten_data)    # Het CAN bericht wordt opgesteld
+    bus.send(Test_berichten_bericht)                                                                            # Het bericht wordt over de bus verzonden
+    
     message = bus.recv()                                             # Berichten van de bus worden verbonden aan parameter 'message'
     message=db.decode_message(message.arbitration_id, message.data)  # De berichten worden gedecodeerd aan de hand van de dbc file
     Test_berichten_Pot1=message.get('Pot1')                          # Met behulp van het dbc file worden specifieke waardes uit de data gehaald
