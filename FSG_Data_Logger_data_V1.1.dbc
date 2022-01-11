@@ -115,7 +115,7 @@ BO_ 512 Aansturing_Remsysteem: 2 CentraleRegeleenheid
  SG_ Service_Mode : 12|4@1+ (1,0) [0|3] "" Vector__XXX
 
 BO_ 514 Verzending_Remsysteem: 2 Remsysteem
- SG_ Current_Rempedaal : 0|8@1+ (1,0.392156863) [0|100] "%" Vector__XXX
+ SG_ Current_Rempedaal : 0|8@1+ (1,0) [0|100] "%" Vector__XXX
  SG_ Overtravel_switch : 8|1@1+ (1,0) [0|1] "BOOLEAN
 " Vector__XXX
 
