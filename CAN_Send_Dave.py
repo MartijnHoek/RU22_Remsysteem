@@ -35,5 +35,4 @@ while True:
     Verzending_Remsysteem_CR =message.get('Current_Rempedaal')       # Met behulp van het dbc file worden specifieke waardes uit de data gehaald
     Verzending_Remsysteem_OVS=message.get('Overtravel_switch')       # Idem
     
-    print(Verzending_Remsysteem_CR)                                  # Ontvangen data wordt geprint
-    print(Verzending_Remsysteem_OVS)
+    print(Verzending_Remsysteem_CR, Verzending_Remsysteem_OVS)       # Ontvangen data wordt geprint
