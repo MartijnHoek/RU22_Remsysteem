@@ -110,7 +110,7 @@ BO_ 513 Stuur_systeem: 2 Stuursysteem
  SG_ Steering_angle_target : 8|8@1- (0.5,0) [-128|127] "°"  RES,Datalogger,Remsysteem,Stuursysteem,Powertrain,AutonoomRegelsysteem
 
 BO_ 512 Aansturing_Remsysteem: 2 CentraleRegeleenheid
- SG_ Target_Rempedaal : 0|8@1+ (0.392156863,0) [0|100] "%" Vector__XXX
+ SG_ Target_Rempedaal : 0|8@1+ (1,0) [0|100] "%" Vector__XXX
  SG_ Systeem_Mode : 8|4@1+ (1,0) [0|5] "" Vector__XXX
  SG_ Service_Mode : 12|4@1+ (1,0) [0|3] "" Vector__XXX
 
