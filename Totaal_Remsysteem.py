@@ -20,4 +20,5 @@ while True:
         eigen_keyboard.motor_aan(pulseio.PWMOut(board.D12))
 
     CAN_bus.Verzenden()                                   # De Remdruksensoren data wordt uitgezonden
-    CAN_bus.Ontvangen()                                         # Data vanuit de CAN bus wordt ontvangen
+    CAN_bus.Ontvangen()                                   # Data vanuit de CAN bus wordt ontvangen
+     

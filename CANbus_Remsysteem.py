@@ -5,6 +5,8 @@ from can.message import Message                      # Importeert can library   
 import Functies_Remsysteem                           # Importeert de overige functies voor het remsysteem script
 import ADC_Remsysteem                                # Importeert de functies voor de ADC 
 
+Over_Travel_switch = Functies_Remsysteem.Over_travel_switch()
+
 class CAN:                                                                                # Maakt de CAN klasse aan
     
     def __init__(self):
@@ -16,7 +18,9 @@ class CAN:                                                                      
     def Verzenden(self):                                                                       # De data voor de remdruksensoren    
         Verzenden_Remsysteem = self.db.get_message_by_name('Verzending_Remsysteem')                  # Ontcijfert de Test_berichten uit het .dbc file
         Verzenden_Remsysteem_CR = 45                                                           # Parameter voor de data Current_Rempedaal wordt aangemaakt
-        Verzenden_Remsysteem_OVS = 0                                                           # Parameter voor de data Overtravel_switch wordt aangemaakt
+        Over_Travel_switch.Positie_meting() 
+        Verzenden_Remsysteem_OVS = Over_Travel_switch.Schakelaarstand # Parameter voor de data Overtravel_switch wordt aangemaakt
+        print(Verzenden_Remsysteem_OVS)
         Verzenden_Remsysteem_data = Verzenden_Remsysteem.encode({'Current_Rempedaal':Verzenden_Remsysteem_CR, 'Overtravel_switch':Verzenden_Remsysteem_OVS}) # Er wordt aangegeven welke data bij welke aangegeven .dbc waarde hoort            
         Verzenden_Remsysteem_bericht=can.Message(arbitration_id=Verzenden_Remsysteem.frame_id, data=Verzenden_Remsysteem_data) # Het CAN bericht wordt opgesteld
         self.bus.send(Verzenden_Remsysteem_bericht)                                            # Het bericht wordt over de bus verzonden
