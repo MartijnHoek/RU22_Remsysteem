@@ -76,8 +76,8 @@ BO_ 3221225472 VECTOR__INDEPENDENT_SIG_MSG: 0 Vector__XXX
  SG_ NewSignal_0005 : 24|8@1+ (1,0) [0|0] "" Vector__XXX
  SG_ Pot1 : 0|8@1+ (1,0) [0|255] "Volt" Vector__XXX
  SG_ Pot2 : 8|8@1+ (1,0) [0|255] "Volt" Vector__XXX
- SG_ Stuurhoek : 24|8@1+ (0.5,0) [-128|127] "°" Vector__XXX
- SG_ Current_Stuurhoek : 8|8@1- (0.5,0) [-128|127] "°" Vector__XXX
+ SG_ Stuurhoek : 24|8@1+ (0.5,0) [-128|127] "Â°" Vector__XXX
+ SG_ Current_Stuurhoek : 8|8@1- (0.5,0) [-128|127] "Â°" Vector__XXX
  SG_ Actuator_Pos_Actual : 0|9@1+ (1,0) [0|360] "Degree"  CentraleRegeleenheid,RES
  SG_ Actuator_Pos_Target : 9|9@1+ (1,0) [0|360] "Degree"  CentraleRegeleenheid,RES
  SG_ Brake_Fluid_Pressure_Front : 18|4@1+ (1,0) [0|15] "bar"  CentraleRegeleenheid,RES
@@ -106,8 +106,8 @@ BO_ 501 DriverlessDrivingDynamics2: 6 CentraleRegeleenheid
  SG_ Yaw_Rate : 32|16@1- (0.00078125,0) [0|0] "*/s"  RES,Datalogger,Powertrain,AutonoomRegelsysteem
 
 BO_ 513 Stuur_systeem: 2 Stuursysteem
- SG_ Steering_angle_actual : 0|8@1- (0.5,0) [-128|127] "°"  RES,Datalogger,Remsysteem,Stuursysteem,Powertrain,AutonoomRegelsysteem
- SG_ Steering_angle_target : 8|8@1- (0.5,0) [-128|127] "°"  RES,Datalogger,Remsysteem,Stuursysteem,Powertrain,AutonoomRegelsysteem
+ SG_ Steering_angle_actual : 0|8@1- (0.5,0) [-128|127] "Â°"  RES,Datalogger,Remsysteem,Stuursysteem,Powertrain,AutonoomRegelsysteem
+ SG_ Steering_angle_target : 8|8@1- (0.5,0) [-128|127] "Â°"  RES,Datalogger,Remsysteem,Stuursysteem,Powertrain,AutonoomRegelsysteem
 
 BO_ 512 Aansturing_Remsysteem: 2 CentraleRegeleenheid
  SG_ Target_Rempedaal : 0|8@1+ (0.392156863,0) [0|100] "%" Vector__XXX
