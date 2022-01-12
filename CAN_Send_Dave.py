@@ -20,8 +20,8 @@ while True:
     # Aansturing Remsysteem bericht
     
     Target_Rempedaal = 50              # Gewenste voertuigsnelheid in km/h
-    Systeem_Mode = 1                  # Systeem modus van het autonome systeem 0 = off, 1 = ready, 2 = driving, 3 = emergency brake, 4 = finish
-    Service_Mode = 3                  # Service modus van het remsysteem 1 = disengaged, 2 = engaged, 3 = available
+    Systeem_Mode = 4                   # Systeem modus van het autonome systeem 0 = off, 1 = ready, 2 = driving, 3 = emergency brake, 4 = finish
+    Service_Mode = 1                   # Service modus van het remsysteem 1 = disengaged, 2 = engaged, 3 = available
     
     # Zelfde proces als Test_berichten (er wordt een bericht aangemaakt en verzonden)
     Aansturing_Remsysteem_data = Aansturing_Remsysteem.encode({'Target_Rempedaal': Target_Rempedaal, 'Systeem_Mode': Systeem_Mode, 'Service_Mode': Service_Mode})
