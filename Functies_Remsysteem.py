@@ -16,16 +16,14 @@ Schakelaarstand = 0
 
 class Over_travel_switch:
     def __init__(self):
-        #self.Pin1 = InputDevice(16)
-        #self.Pin2 = InputDevice(20)
         self.Pin1_value = True
         self.Pin2_value = False
         self.Schakelaarstand = Schakelaarstand
                         
     def Positie_meting(self):
         self.Pin1_value = Pin1.value
-        self.Pin2_value = Pin2.value                  
-        #self.Schakelaarstand = 
+        self.Pin2_value = Pin2.value
+        
         if Pin1.value == False and Pin2.value == True:
             self.Schakelaarstand = 0
             return self.Schakelaarstand
@@ -33,8 +31,6 @@ class Over_travel_switch:
         elif Pin1.value == True and Pin2.value == False:
             self.Schakelaarstand = 1
             return self.Schakelaarstand
-                    
-    # TO DO Schakeling Wanneer schakelaar 2 eenmaal op True staat deze niet meer wijziging zonder signaal van Centrale Regeleenheid
 
 # Keyboard functies
 
