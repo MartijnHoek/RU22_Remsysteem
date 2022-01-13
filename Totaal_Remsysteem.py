@@ -9,7 +9,8 @@ import os                    # Importeert Operating System library (OS)
 
 os.system("sudo /sbin/ip link set can0 up type can bitrate 500000") # Instellingen voor setup CAN-bus
 eigen_keyboard = Functies_Remsysteem.Keyboard()
-CAN_bus = CANbus_Remsysteem.CAN()   
+CAN_bus = CANbus_Remsysteem.CAN()
+status = CANbus_Remsysteem.Status()
 
 while True:                                                    
    
@@ -19,29 +20,29 @@ while True:
         eigen_keyboard.motor_aan(pulseio.PWMOut(board.D12))
 
     CAN_bus.Verzenden()                                   # De Remdruksensoren data wordt uitgezonden
-    CAN_bus.Ontvangen()                                   # Data vanuit de CAN bus wordt ontvangen
+    status = CAN_bus.Ontvangen(status)                                   # Data vanuit de CAN bus wordt ontvangen
   
-    if CAN_bus.Service_Mode == 1 or CAN_bus.Service_Mode == 3:
+    if status.Service_Mode == 1 or status.Service_Mode == 3:
         #print('Service_Mode 1 of 3')
         # Geen Actie
         pass
     
-    elif CAN_bus.Service_Mode == 2:
+    elif status.Service_Mode == 2:
         #print('Service_Mode 2')
         # Pedaal stand naar 0 %
         pass
     
-    if CAN_bus.Systeem_Mode == 1 or CAN_bus.Systeem_Mode == 4:
+    if status.Systeem_Mode == 1 or status.Systeem_Mode == 4:
         #print('Systeem_Mode 1 of 4')
         # Pedaalstand naar 0
         pass
 
-    elif CAN_bus.Systeem_Mode == 2 or CAN_bus.Systeem_Mode == 5:
+    elif status.Systeem_Mode == 2 or status.Systeem_Mode == 5:
         #print('Systeem_Mode 2 of 5')
         # Pedaalstand naar 100
         pass
     
-    elif CAN_bus.Systeem_Mode == 3:
+    elif status.Systeem_Mode == 3:
         #print('Systeem_Mode 3')
         # Pedaalstand Dynamisch
         pass

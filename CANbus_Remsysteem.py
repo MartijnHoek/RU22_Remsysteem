@@ -7,9 +7,11 @@ import ADC_Remsysteem                                # Importeert de functies vo
 
 Over_Travel_switch = Functies_Remsysteem.Over_travel_switch()
 
-Service_Mode = 1
-Systeem_Mode = 1
-Target_Rempedaal = 0
+class Status:
+    def __init__(self):
+        self.Service_Mode = 1
+        self.Systeem_Mode = 1
+        self.Target_Rempedaal = 0
 
 class CAN:                                                                                # Maakt de CAN klasse aan
     
@@ -18,9 +20,6 @@ class CAN:                                                                      
         self.db = cantools.db.load_file('/home/pi/Desktop/RU22_Remsysteem/FSG_Data_Logger_data_V1.1.dbc')  # Laad het .dbc file voor ontcijferen berichten
         self.Verzending_Remsysteem = self.db.get_message_by_name('Verzending_Remsysteem')                  # Ontcijfert de Verzending_Remsysteem uit het .dbc file
         self.Aansturing_Remsysteem = self.db.get_message_by_name('Aansturing_Remsysteem')                  # Ontcijfert de Aansturing_Remsysteem berichten uit het .dbc file            
-        self.Service_Mode = Service_Mode
-        self.Systeem_Mode = Systeem_Mode
-        self.Target_Rempedaal = Target_Rempedaal 
           
     def Verzenden(self):                                                                       # De data voor de remdruksensoren    
         Verzenden_Remsysteem = self.db.get_message_by_name('Verzending_Remsysteem')                  # Ontcijfert de Test_berichten uit het .dbc file
@@ -31,17 +30,17 @@ class CAN:                                                                      
         Verzenden_Remsysteem_bericht=can.Message(arbitration_id=Verzenden_Remsysteem.frame_id, data=Verzenden_Remsysteem_data) # Het CAN bericht wordt opgesteld
         self.bus.send(Verzenden_Remsysteem_bericht)                                            # Het bericht wordt over de bus verzonden
 
-    def Ontvangen(self):                                                         # Het ontvangen en verwerken van data over de CAN bus
+    def Ontvangen(self, status):                                                         # Het ontvangen en verwerken van data over de CAN bus
         message = self.bus.recv()                                                     # Berichten van de bus worden verbonden aan parameter message
         
         if message.arbitration_id == 512:                                      # Leest het bericht uit als deze een ID heeft van 514
              message514 = self.db.decode_message(message.arbitration_id, message.data) # Ontcijfert de data afkomstig uit bericht 'message'                         
-             self.Target_Rempedaal = message514.get('Target_Rempedaal')                  # De data wordt uitgelezen op basis van de verbonden waardes in het .dbc file
-             self.Systeem_Mode = message514.get('Systeem_Mode')
-             self.Service_Mode = message514.get('Service_Mode')            
-             print(self.Target_Rempedaal, self.Systeem_Mode, self.Service_Mode) 
+             status.Target_Rempedaal = message514.get('Target_Rempedaal')                  # De data wordt uitgelezen op basis van de verbonden waardes in het .dbc file
+             status.Systeem_Mode = message514.get('Systeem_Mode')
+             status.Service_Mode = message514.get('Service_Mode')            
+             print(status.Target_Rempedaal, status.Systeem_Mode, status.Service_Mode) 
              #print(message514)
-             return self.Service_Mode, self.Systeem_Mode, self.Target_Rempedaal
+             #return self.Service_Mode, self.Systeem_Mode, self.Target_Rempedaal
             
 #         elif message.arbitration_id == 514:                                      # Leest het bericht uit als deze een ID heeft van 514
 #             message514 = self.db.decode_message(message.arbitration_id, message.data) # Ontcijfert de data afkomstig uit bericht 'message'                         
@@ -54,3 +53,5 @@ class CAN:                                                                      
                            
         else:                                                                    # Overige berichten worden niet gelezen, momenteel aangegeven met print functie
             print("Overige berichten")
+            
+        return status
