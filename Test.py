@@ -1,11 +1,10 @@
 # Analoog / Digitaal Converter
-
-import RPi.GPIO                                      # Importeert GPIO library      (RPi)
 import busio                                         # Importeert busio library     (adafruit)
+import board                                         # Importeert board library     (adafruit)
 import adafruit_ads1x15.ads1015 as ADS               # Importeert ADS library       (adafruit)
 from adafruit_ads1x15.analog_in import AnalogIn      # Importeer AnalogIn library   (adafruit)
 
-i2c = busio.I2C(3,2)                # busio.I2C creeert een interface voor de I2C protocol
+i2c = busio.I2C(board.SCL, board.SDA)                # busio.I2C creeert een interface voor de I2C protocol
 ads = ADS.ADS1015(i2c)                               # De ADS drive wordt aangegeven welke interface toegepast moet worden
 chan1 = AnalogIn(ads, ADS.P0)                        # De toegepaste kanalen op de ADC worden gedefineerd
 chan2 = AnalogIn(ads, ADS.P1)                        # De toegepaste kanalen op de ADC worden gedefineerd

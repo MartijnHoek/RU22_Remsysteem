@@ -1,4 +1,4 @@
-import board                                         # Importeert board library     (adafruit)
+import RPi.GPIO                                      # Importeert GPIO library      (RPI)
 import keyboard                                      # Importeert keyboard library  (RPi)
 import digitalio                                     # Importeert digitalio library (adafruit)
 from gpiozero import InputDevice
@@ -38,23 +38,23 @@ class Keyboard:                                  # Klasse voor het toetsenbord w
     def __init__ (self):                         # De klasse wordt geinitialiseerd                             
         self.block = True                        # De block parameter wordt op True gezet 
         self.display = True                      # De display parameter wordt op True gezet 
-        self.dir1 = digitalio.DigitalInOut(board.D26)             # Pin 26 wordt aangeduid als een digitale In-/Output
-        self.dir2 = digitalio.DigitalInOut(board.D24)             # Pin 24 wordt aangeduid als een digitale In-/Output
-        self.dir1.direction = digitalio.Direction.OUTPUT          # Pin 26 wordt als Output gedefineerd 
-        self.dir2.direction = digitalio.Direction.OUTPUT          # Pin 24 wordt als Output gedefineerd   
+#         self.dir1 = digitalio.DigitalInOut(37)             # Pin 26 wordt aangeduid als een digitale In-/Output
+#         self.dir2 = digitalio.DigitalInOut(18)             # Pin 24 wordt aangeduid als een digitale In-/Output
+#         self.dir1.direction = digitalio.Direction.OUTPUT          # Pin 26 wordt als Output gedefineerd 
+#         self.dir2.direction = digitalio.Direction.OUTPUT          # Pin 24 wordt als Output gedefineerd   
         
     def motor_uit(self,PWM):                     # De motor_uit functie wordt aangemaakt, hierin wordt de DC op 0 gezet en wordt er motor uit geprint 
         PWM.duty_cycle = 0                       # in de terminal  
         #print("Motor Uit")       
-        self.dir1.value = True                        # De richting van de motor wordt vastgesteld als 1 = True en 2 False is de richting rechtsom 
-        self.dir2.value = False       
+#         self.dir1.value = True                        # De richting van de motor wordt vastgesteld als 1 = True en 2 False is de richting rechtsom 
+#         self.dir2.value = False       
         
     def motor_aan(self,PWM):                     # De motor aan functie wordt aangemaakt, hierin wordt de DC op 65535 gezet (maximale waarde) en wordt er
         PWM.duty_cycle = 65535                   # in de terminal aangegeven dat de motor geactiveerd is.
         #print("Motor Aan")        
-        self.dir1.value = True
-        self.dir2.value = False
-        
+#         self.dir1.value = True
+#         self.dir2.value = False
+#         
     def Toggle_k(self):
         if keyboard.is_pressed("k"):             # Wanneer toets k ingedrukt open loop      
             if self.block == False:              # Wanneer waarde block gelijk is aan False open loop
