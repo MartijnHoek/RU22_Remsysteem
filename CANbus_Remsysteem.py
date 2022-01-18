@@ -38,7 +38,7 @@ class CAN:                                                                      
              Ontvangen_Parameters.Target_Rempedaal = message514.get('Target_Rempedaal')                  # De data wordt uitgelezen op basis van de verbonden waardes in het .dbc file
              Ontvangen_Parameters.Systeem_Mode = message514.get('Systeem_Mode')
              Ontvangen_Parameters.Service_Mode = message514.get('Service_Mode')            
-             print(Ontvangen_Parameters.Target_Rempedaal, Ontvangen_Parameters.Systeem_Mode, Ontvangen_Parameters.Service_Mode) 
+             #print(Ontvangen_Parameters.Target_Rempedaal, Ontvangen_Parameters.Systeem_Mode, Ontvangen_Parameters.Service_Mode) 
              #print(message514)
             
 #         elif message.arbitration_id == 514:                                      # Leest het bericht uit als deze een ID heeft van 514

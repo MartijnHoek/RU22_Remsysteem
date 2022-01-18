@@ -23,7 +23,6 @@ class PIDC:
     
     def pidexc(self,a):
         self.a = a
-        print(a)
         self.pwm = self.pid(a)
         #print(self.a,self.pwm)
         return self.a, self.pwm

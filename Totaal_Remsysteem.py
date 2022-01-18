@@ -1,9 +1,10 @@
 # Startup (libraries)
-import pulseio               # Importeert de library voor de motor aansturing (PWM signalen)
-import RPi.GPIO              # Importeert de library voor de motor aansturing (pin aanduiding)
+#import pulseio               # Importeert de library voor de motor aansturing (PWM signalen)
+import RPi.GPIO as GPIO            # Importeert de library voor de motor aansturing (pin aanduiding)
 
 import Functies_Remsysteem   # Importeert de overige functies voor het remsysteem script
 import CANbus_Remsysteem     # Importeert de CAN bus library waarin de CAN berichten van het remsysteem verwerkt worden
+
 import Motor_Controller_Remsysteem 
 
 import os                    # Importeert Operating System library (OS)
@@ -12,10 +13,22 @@ os.system("sudo /sbin/ip link set can0 up type can bitrate 500000") # Instelling
 eigen_keyboard = Functies_Remsysteem.Keyboard()
 CAN_bus = CANbus_Remsysteem.CAN()
 Ontvangen_data = CANbus_Remsysteem.Ontvangen_Parameters()
-Hall = Motor_Controller_Remsysteem.Hall(16,13)
+HALL = Motor_Controller_Remsysteem.Hall(23,27)    # 16,13 voor BOARD layout
+PID = Motor_Controller_Remsysteem.PIDC(1,0,0,-100,100)
+Motor = Motor_Controller_Remsysteem.DOGA(12,26,100) # 33, 18 voor BOARD layout
+ 
+PID.spcalc(1000)
 
-while True:                                                    
-    Hall.Hoek_meting()
+while True:
+    
+    HALL.Hoek_meting()
+        
+    PID.pidexc(HALL)
+    
+    PID.get_pwm()
+        
+    Motor.motor_aansturen(PID)
+    
 #     if eigen_keyboard.Toggle_k() :                            # wordt zal de code in deze klasse geactiveerd worden (en zal de motor in/uitgeschakeld worden) 
 #         eigen_keyboard.motor_uit(pulseio.PWMOut(32))   # Als Display True is opend deze loop
 #     else:                                                     # Als Display False is opend deze loop
@@ -23,8 +36,7 @@ while True:
 
     CAN_bus.Verzenden()                                   # De Remdruksensoren data wordt uitgezonden
     Ontvangen_data = CAN_bus.Ontvangen(Ontvangen_data)                                   # Data vanuit de CAN bus wordt ontvangen
-  
-    
+
   
     if Ontvangen_data.Service_Mode == 1 or Ontvangen_data.Service_Mode == 3:
         #print('Service_Mode 1 of 3')
