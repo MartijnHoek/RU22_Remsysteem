@@ -4,18 +4,22 @@ from simple_pid import PID
 
 import Functies_Remsysteem
 
+class Huidige_Hoek:
+    def __init__(self):
+        self.angle = 0
+        
 class Hall:
     
     def __init__(self,A,B):
         self.A = A
         self.B = B
-        self.angle = 0
+        #self.angle = 0
         self.e1 = Encoder(self.A,self.B)
 
-    def Hoek_meting(self):      
-        self.angle = Functies_Remsysteem.arduino_map(self.e1.getValue(),0,1000,0,100)
-        return self.angle 
-
+    def Hoek_meting(self,Huidige_Hoek):      
+        Huidige_Hoek.angle = round(Functies_Remsysteem.arduino_map(self.e1.getValue(),0,1000,0,100))
+        return Huidige_Hoek
+       
 class PIDC:
     
     def __init__(self,p,i,d,ll,ul):
@@ -33,9 +37,9 @@ class PIDC:
         self.pid = PID(self.p,self.i,self.d,setpoint = self.sp)
         self.pid.output_limits = (self.ll,self.ul)
         return self.sp
-    
-    def pidexc(self, Hall):
-        self.a = Hall.angle
+
+    def pidexc(self, Huidige_Hoek):
+        self.a = Huidige_Hoek.angle
         self.pwm = self.pid(self.a)
         print(self.a)
         return self.a, self.pwm

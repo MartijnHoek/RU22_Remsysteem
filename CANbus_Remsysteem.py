@@ -7,6 +7,7 @@ import ADC_Remsysteem                                # Importeert de functies vo
 import Motor_Controller_Remsysteem                   # Importeert de motor_ Controller Module
 
 Over_Travel_switch = Functies_Remsysteem.Over_travel_switch()
+Huidige_Positie = Motor_Controller_Remsysteem.Huidige_Hoek()
 
 class Ontvangen_Parameters:
     def __init__(self):
@@ -22,9 +23,9 @@ class CAN:                                                                      
         self.Verzending_Remsysteem = self.db.get_message_by_name('Verzending_Remsysteem')                  # Ontcijfert de Verzending_Remsysteem uit het .dbc file
         self.Aansturing_Remsysteem = self.db.get_message_by_name('Aansturing_Remsysteem')                  # Ontcijfert de Aansturing_Remsysteem berichten uit het .dbc file            
           
-    def Verzenden(self):                                                                       # De data voor de remdruksensoren    
+    def Verzenden(self, Huidige_Positie):                                                      # De data voor de remdruksensoren
         Verzenden_Remsysteem = self.db.get_message_by_name('Verzending_Remsysteem')            # Ontcijfert de Test_berichten uit het .dbc file
-        Verzenden_Remsysteem_CR = 45                                        # Parameter voor de data Current_Rempedaal wordt aangemaakt
+        Verzenden_Remsysteem_CR = Huidige_Positie.angle                                        # Parameter voor de data Current_Rempedaal wordt aangemaakt                                 
         Over_Travel_switch.Positie_meting() 
         Verzenden_Remsysteem_OVS = Over_Travel_switch.Schakelaarstand # Parameter voor de data Overtravel_switch wordt aangemaakt
         Verzenden_Remsysteem_data = Verzenden_Remsysteem.encode({'Current_Rempedaal':Verzenden_Remsysteem_CR, 'Overtravel_switch':Verzenden_Remsysteem_OVS}) # Er wordt aangegeven welke data bij welke aangegeven .dbc waarde hoort            

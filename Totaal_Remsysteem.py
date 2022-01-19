@@ -16,6 +16,7 @@ Ontvangen_data = CANbus_Remsysteem.Ontvangen_Parameters()
 HALL = Motor_Controller_Remsysteem.Hall(23,27)    # 16,13 voor BOARD layout
 PID = Motor_Controller_Remsysteem.PIDC(1,0,0,-100,100)
 Motor = Motor_Controller_Remsysteem.DOGA(12,26,500) # 33, 18 voor BOARD layout
+Current_Rempositie = Motor_Controller_Remsysteem.Huidige_Hoek()
 
 while True:
         
@@ -24,12 +25,13 @@ while True:
 #     else:                                                     # Als Display False is opend deze loop
 #         eigen_keyboard.motor_aan(pulseio.PWMOut(32))
 
-    CAN_bus.Verzenden()                                   # De Remdruksensoren data wordt uitgezonden
+    CAN_bus.Verzenden(Current_Rempositie)                                   # De Remdruksensoren data wordt uitgezonden   
     Ontvangen_data = CAN_bus.Ontvangen(Ontvangen_data)                                   # Data vanuit de CAN bus wordt ontvangen
-
-    HALL.Hoek_meting()
+    
+    HALL.Hoek_meting(Current_Rempositie)
+    
     PID.spcalc(Ontvangen_data.Target_Rempedaal)
-    PID.pidexc(HALL)
+    PID.pidexc(Current_Rempositie)
     PID.get_pwm()
     Motor.motor_aansturen(PID)
   
