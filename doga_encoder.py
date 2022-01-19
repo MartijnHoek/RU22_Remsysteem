@@ -16,7 +16,7 @@ B = 13
 angle = 0
 e1 = Encoder(A,B)
 
-PID.spcalc(10)
+PID.spcalc(20)
 
 while True: 
         

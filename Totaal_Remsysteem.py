@@ -15,20 +15,10 @@ CAN_bus = CANbus_Remsysteem.CAN()
 Ontvangen_data = CANbus_Remsysteem.Ontvangen_Parameters()
 HALL = Motor_Controller_Remsysteem.Hall(23,27)    # 16,13 voor BOARD layout
 PID = Motor_Controller_Remsysteem.PIDC(1,0,0,-100,100)
-Motor = Motor_Controller_Remsysteem.DOGA(12,26,100) # 33, 18 voor BOARD layout
- 
-PID.spcalc(1000)
+Motor = Motor_Controller_Remsysteem.DOGA(12,26,500) # 33, 18 voor BOARD layout
 
 while True:
-    
-    HALL.Hoek_meting()
         
-    PID.pidexc(HALL)
-    
-    PID.get_pwm()
-        
-    Motor.motor_aansturen(PID)
-    
 #     if eigen_keyboard.Toggle_k() :                            # wordt zal de code in deze klasse geactiveerd worden (en zal de motor in/uitgeschakeld worden) 
 #         eigen_keyboard.motor_uit(pulseio.PWMOut(32))   # Als Display True is opend deze loop
 #     else:                                                     # Als Display False is opend deze loop
@@ -37,6 +27,11 @@ while True:
     CAN_bus.Verzenden()                                   # De Remdruksensoren data wordt uitgezonden
     Ontvangen_data = CAN_bus.Ontvangen(Ontvangen_data)                                   # Data vanuit de CAN bus wordt ontvangen
 
+    HALL.Hoek_meting()
+    PID.spcalc(Ontvangen_data.Target_Rempedaal)
+    PID.pidexc(HALL)
+    PID.get_pwm()
+    Motor.motor_aansturen(PID)
   
     if Ontvangen_data.Service_Mode == 1 or Ontvangen_data.Service_Mode == 3:
         #print('Service_Mode 1 of 3')

@@ -2,6 +2,8 @@ from encoder import Encoder
 import RPi.GPIO as GPIO
 from simple_pid import PID
 
+import Functies_Remsysteem
+
 class Hall:
     
     def __init__(self,A,B):
@@ -10,11 +12,8 @@ class Hall:
         self.angle = 0
         self.e1 = Encoder(self.A,self.B)
 
-    def Hoek_meting(self):
-        #print(self.angle)       
-        self.angle = self.e1.getValue()
-        #print(self.angle)
-        print(self.e1.getValue())
+    def Hoek_meting(self):      
+        self.angle = Functies_Remsysteem.arduino_map(self.e1.getValue(),0,1000,0,100)
         return self.angle 
 
 class PIDC:
@@ -30,16 +29,15 @@ class PIDC:
     
     def spcalc(self,gw):
         self.gw = gw
-        self.sp = float(self.gw)
+        self.sp = self.gw
         self.pid = PID(self.p,self.i,self.d,setpoint = self.sp)
         self.pid.output_limits = (self.ll,self.ul)
-        #print(self.sp)
         return self.sp
     
     def pidexc(self, Hall):
         self.a = Hall.angle
         self.pwm = self.pid(self.a)
-        #print(self.a,self.pwm)
+        print(self.a)
         return self.a, self.pwm
 
     def get_pwm(self):
