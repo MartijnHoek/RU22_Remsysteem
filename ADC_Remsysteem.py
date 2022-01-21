@@ -18,6 +18,7 @@ class Remdruksensor:                                 # Klasse voor de remdruksen
     def meet(self):                                  # De meet klasse wordt aangemaakt, in deze klasse wordt het analoge signal omgezet naar digitaal.
         meetwaarde = round(chan1.voltage,2),round(chan2.voltage,2),\
              int(chan1.voltage/(chan1.voltage+chan2.voltage)*100), int(chan2.voltage/(chan1.voltage+chan2.voltage)*100)
+        print(meetwaarde)
         return meetwaarde
 
 Signalen_Remdruksensor = Remdruksensor(chan1, chan2)
